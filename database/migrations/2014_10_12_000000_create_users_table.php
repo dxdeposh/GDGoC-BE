@@ -12,12 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->uuid('user_id')->primary();
+            $table->string('nama');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('alamat');
+            $table->string('no_telepon');
+            $table->timestamp('tanggal_daftar')->useCurrent();
+            $table->enum('role', ['buyer', 'seller', 'admin', 'moderator']);
+            $table->string('foto_profil')->nullable();
+            $table->enum('status_verifikasi', ['verified', 'unverified', 'pending'])->default('pending');
+            $table->float('rating')->default(0);
+            $table->integer('total_transaksi')->default(0);
+            $table->float('lokasi_geolokasi_latitude')->nullable();
+            $table->float('lokasi_geolokasi_longitude')->nullable();
             $table->timestamps();
         });
     }
